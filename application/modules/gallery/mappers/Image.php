@@ -134,6 +134,19 @@ class Image extends \Ilch\Mapper
         return $entry;
     }
 
+    public function getImageUrlsByGalleryId($galleryId)
+    {
+        return $this->db()
+            ->select([
+                '[prefix]_media.url',
+            ])
+            ->from('gallery_imgs')
+            ->join('media', '[prefix]_media.id = [prefix]_gallery_imgs.image_id', 'LEFT')
+            ->where(['[prefix]_gallery_imgs.cat' => $galleryId])
+            ->execute()
+            ->fetchList();
+    }
+
     /**
      * Get a list of valid image ids.
      *

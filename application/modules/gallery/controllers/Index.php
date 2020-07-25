@@ -50,8 +50,10 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index'])
                 ->add($gallery->getTitle(), ['action' => 'show', 'id' => $id]);
 
+        $this->getView()->set('gallery', $gallery);
         $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('images', json_encode(str_replace('\\', '/', $imageMapper->getImageUrlsByGalleryId($id))));
     }
 
     public function showImageAction() 
